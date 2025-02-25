@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьные новости</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+        }
+        header {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        .news-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+        .news-column {
+            width: 45%;
+        }
+        .news-item {
+            background: #1e1e1e;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .news-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        .news-item:hover {
+            background: #333333;
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            width: 50%;
+            color: #e0e0e0;
+            animation: slideIn 0.3s;
+        }
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #e0e0e0;
+        }
+        .modal img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+        .modal h2, .modal p {
+            margin-bottom: 10px;
+        }
+        .modal .author, .modal .editor {
+            font-style: italic;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Новости школы</h1>
+    </header>
+    <main>
+        <section class="news-container">
+            <div class="news-column">
+                <h2>Новости этой недели</h2>
+                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 1', 'Подробное описание новости 1', 'Иван Иванов', 'Мария Петрова')">
+                    <img src="new2s1.jpg" alt="Новость 1">
+                    <div>
+                        <h3>Новость 1</h3>
+                        <p>Краткое описание новости...</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Новость">
+            <h2 id="modalTitle"></h2>
+            <p id="modalText"></p>
+            <p class="author"><strong>Автор:</strong> <span id="modalAuthor"></span></p>
+            <p class="editor"><strong>Редактор:</strong> <span id="modalEditor"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        // Открытие модального окна
+        function openModal(image, title, text, author, editor) {
+            document.getElementById('modalImage').src = image;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('modalAuthor').innerText = author;
+            document.getElementById('modalEditor').innerText = editor;
+            document.getElementById('newsModal').style.display = 'flex';
+        }
+
+        // Закрытие модального окна
+        function closeModal() {
+            document.getElementById('newsModal').style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике за пределами
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('newsModal')) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>
