@@ -43,7 +43,7 @@
         }
         .news-item {
             background: #1e1e1e;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
@@ -51,13 +51,12 @@
             transition: background 0.3s, transform 0.3s;
             display: flex;
             align-items: center;
-            font-size: 0.9rem;
         }
         .news-item img {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 8px;
-            margin-right: 10px;
+            margin-right: 15px;
         }
         .news-item:hover {
             background: #333333;
@@ -98,51 +97,41 @@
             cursor: pointer;
             color: #e0e0e0;
         }
-        /* Кастомный скролл */
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        .modal-content::-webkit-scrollbar-track {
-            background: #2a2a2a;
-            border-radius: 8px;
-        }
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #5a5a5a;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: #888888;
+        @keyframes slideIn {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1 id="title">Новости школы</h1>
-        <button class="language-switch" onclick="switchLanguage()">RU / NO</button>
+        <h1>Новости школы</h1>
     </header>
     <main>
         <section class="news-container">
             <div class="news-column">
-                <h2 id="week-title">Новости этой недели</h2>
+                <h2>Новости этой недели</h2>
                 <article class="news-item" onclick="openModal('news1.jpg', 'Новость 1', 'Полный текст новости 1...', 'Иван Иванов', 'Мария Петрова')">
                     <img src="news1.jpg" alt="Новость 1">
                     <h3>Новость 1</h3>
                 </article>
-                <article class="news-item" onclick="openModal('news2.jpg', 'Новость 2', 'Полный текст новости 2...', 'Алексей Смирнов', 'Ольга Сидорова')">
-                    <img src="news2.jpg" alt="Новость 2">
+                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 2', 'Полный текст новости 2...', 'Алексей Смирнов', 'Ольга Сидорова')">
+                    <img src="news1.jpg" alt="Новость 2">
                     <h3>Новость 2</h3>
                 </article>
             </div>
-
             <div class="news-column">
-                <h2 id="last-week-title">Новости прошлой недели</h2>
-                <article class="news-item" onclick="openModal('news3.jpg', 'Новость 3', 'Полный текст новости 3...', 'Екатерина Белова', 'Павел Козлов')">
-                    <img src="news3.jpg" alt="Новость 3">
+                <h2>Новости прошлой недели</h2>
+                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 3', 'Полный текст новости 3...', 'Екатерина Белова', 'Павел Козлов')">
+                    <img src="news1.jpg" alt="Новость 3">
                     <h3>Новость 3</h3>
                 </article>
-                <article class="news-item" onclick="openModal('news4.jpg', 'Новость 4', 'Полный текст новости 4...', 'Сергей Васильев', 'Анна Орлова')">
-                    <img src="news4.jpg" alt="Новость 4">
+                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 4', 'Полный текст новости 4...', 'Сергей Васильев', 'Анна Орлова')">
+                    <img src="news1.jpg" alt="Новость 4">
                     <h3>Новость 4</h3>
                 </article>
             </div>
@@ -172,21 +161,6 @@
 
         function closeModal() {
             document.getElementById('newsModal').style.display = 'none';
-        }
-
-        function switchLanguage() {
-            let lang = document.documentElement.lang === "ru" ? "no" : "ru";
-            document.documentElement.lang = lang;
-
-            if (lang === "no") {
-                document.getElementById("title").innerText = "Skolenyheter";
-                document.getElementById("week-title").innerText = "Denne ukens nyheter";
-                document.getElementById("last-week-title").innerText = "Forrige ukens nyheter";
-            } else {
-                document.getElementById("title").innerText = "Новости школы";
-                document.getElementById("week-title").innerText = "Новости этой недели";
-                document.getElementById("last-week-title").innerText = "Новости прошлой недели";
-            }
         }
     </script>
 </body>
