@@ -18,7 +18,6 @@
             background-color: #1f1f1f;
             color: #ffffff;
             padding: 15px 0;
-            text-align: center;
             font-size: 1.5rem;
         }
         .news-container {
@@ -69,12 +68,25 @@
             width: 50%;
             color: #e0e0e0;
             animation: slideIn 0.3s;
+            text-align: left;
         }
         .close {
             float: right;
             font-size: 24px;
             cursor: pointer;
             color: #e0e0e0;
+        }
+        .modal img {
+            width: 100%;
+            max-height: 250px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .modal h2, .modal p {
+            margin-bottom: 10px;
+        }
+        .modal .author, .modal .editor {
+            font-style: italic;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -94,14 +106,14 @@
         <section class="news-container">
             <div class="news-column">
                 <h2>Новости этой недели</h2>
-                <article class="news-item" onclick="openModal('Новость 1', 'Подробное описание новости 1')">
+                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 1', 'Подробное описание новости 1', 'Иван Иванов', 'Мария Петрова')">
                     <img src="news1.jpg" alt="Новость 1">
                     <div>
                         <h3>Новость 1</h3>
                         <p>Краткое описание новости...</p>
                     </div>
                 </article>
-                <article class="news-item" onclick="openModal('Новость 2', 'Подробное описание новости 2')">
+                <article class="news-item" onclick="openModal('news2.jpg', 'Новость 2', 'Подробное описание новости 2', 'Алексей Смирнов', 'Ольга Сидорова')">
                     <img src="news2.jpg" alt="Новость 2">
                     <div>
                         <h3>Новость 2</h3>
@@ -109,16 +121,17 @@
                     </div>
                 </article>
             </div>
+
             <div class="news-column">
                 <h2>Новости прошлой недели</h2>
-                <article class="news-item" onclick="openModal('Новость 3', 'Подробное описание новости 3')">
+                <article class="news-item" onclick="openModal('news3.jpg', 'Новость 3', 'Подробное описание новости 3', 'Екатерина Белова', 'Павел Козлов')">
                     <img src="news3.jpg" alt="Новость 3">
                     <div>
                         <h3>Новость 3</h3>
                         <p>Краткое описание новости...</p>
                     </div>
                 </article>
-                <article class="news-item" onclick="openModal('Новость 4', 'Подробное описание новости 4')">
+                <article class="news-item" onclick="openModal('news4.jpg', 'Новость 4', 'Подробное описание новости 4', 'Сергей Васильев', 'Анна Орлова')">
                     <img src="news4.jpg" alt="Новость 4">
                     <div>
                         <h3>Новость 4</h3>
@@ -132,11 +145,36 @@
     <div id="newsModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Новость">
             <h2 id="modalTitle"></h2>
             <p id="modalText"></p>
+            <p class="author"><strong>Автор:</strong> <span id="modalAuthor"></span></p>
+            <p class="editor"><strong>Редактор:</strong> <span id="modalEditor"></span></p>
         </div>
     </div>
     
-    <script src="script.js"></script>
+    <script>
+        // Открытие модального окна
+        function openModal(image, title, text, author, editor) {
+            document.getElementById('modalImage').src = image;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('modalAuthor').innerText = author;
+            document.getElementById('modalEditor').innerText = editor;
+            document.getElementById('newsModal').style.display = 'flex';
+        }
+
+        // Закрытие модального окна
+        function closeModal() {
+            document.getElementById('newsModal').style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике за пределами
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('newsModal')) {
+                closeModal();
+            }
+        };
+    </script>
 </body>
 </html>
