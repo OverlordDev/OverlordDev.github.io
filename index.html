@@ -19,27 +19,12 @@
             color: #ffffff;
             padding: 15px 0;
             font-size: 1.5rem;
-            position: relative;
         }
-        .language-switch {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: #333;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        .news-container {
-            display: flex;
-            justify-content: space-around;
+        .news-list {
             margin: 20px;
-        }
-        .news-column {
-            width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .news-item {
             background: #1e1e1e;
@@ -49,8 +34,8 @@
             box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: background 0.3s, transform 0.3s;
-            display: flex;
-            align-items: center;
+            width: 80%;
+            max-width: 800px;
         }
         .news-item img {
             width: 80px;
@@ -61,6 +46,11 @@
         .news-item:hover {
             background: #333333;
             transform: scale(1.05);
+        }
+        .date {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            margin-bottom: 10px;
         }
         .modal {
             display: none;
@@ -112,29 +102,39 @@
         <h1>Skolenyheter</h1>
     </header>
     <main>
-        <section class="news-container">
-            <div class="news-column">
-                <h2>Denne ukens nyheter</h2>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 1', 'Full tekst for nyhet 1...', 'Ivan Ivanov', 'Maria Petrova')">
-                    <img src="news1.jpg" alt="Nyhet 1">
+        <section class="news-list">
+            <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 1', 'Full tekst for nyhet 1...', 'Ivan Ivanov', 'Maria Petrova', '12.12.1212')">
+                <p class="date">12.12.1212</p>
+                <img src="news1.jpg" alt="Nyhet 1">
+                <div>
                     <h3>Nyhet 1</h3>
-                </article>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 2', 'Full tekst for nyhet 2...', 'Alexey Smirnov', 'Olga Sidorova')">
-                    <img src="news1.jpg" alt="Nyhet 2">
+                    <p>Korte beskrivelse av nyheten...</p>
+                </div>
+            </article>
+            <article class="news-item" onclick="openModal('news2.jpg', 'Nyhet 2', 'Full tekst for nyhet 2...', 'Alexey Smirnov', 'Olga Sidorova', '13.12.1212')">
+                <p class="date">13.12.1212</p>
+                <img src="news1.jpg" alt="Nyhet 2">
+                <div>
                     <h3>Nyhet 2</h3>
-                </article>
-            </div>
-            <div class="news-column">
-                <h2>Forrige ukes nyheter</h2>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 3', 'Full tekst for nyhet 3...', 'Ekaterina Belova', 'Pavel Kozlov')">
-                    <img src="news1.jpg" alt="Nyhet 3">
+                    <p>Korte beskrivelse av nyheten...</p>
+                </div>
+            </article>
+            <article class="news-item" onclick="openModal('news3.jpg', 'Nyhet 3', 'Full tekst for nyhet 3...', 'Ekaterina Belova', 'Pavel Kozlov', '14.12.1212')">
+                <p class="date">14.12.1212</p>
+                <img src="news1.jpg" alt="Nyhet 3">
+                <div>
                     <h3>Nyhet 3</h3>
-                </article>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 4', 'Full tekst for nyhet 4...', 'Sergey Vasilyev', 'Anna Orlova')">
-                    <img src="news1.jpg" alt="Nyhet 4">
+                    <p>Korte beskrivelse av nyheten...</p>
+                </div>
+            </article>
+            <article class="news-item" onclick="openModal('news4.jpg', 'Nyhet 4', 'Full tekst for nyhet 4...', 'Sergey Vasilyev', 'Anna Orlova', '15.12.1212')">
+                <p class="date">15.12.1212</p>
+                <img src="news1.jpg" alt="Nyhet 4">
+                <div>
                     <h3>Nyhet 4</h3>
-                </article>
-            </div>
+                    <p>Korte beskrivelse av nyheten...</p>
+                </div>
+            </article>
         </section>
     </main>
     
@@ -146,16 +146,18 @@
             <p id="modalText"></p>
             <p><strong>Forfatter:</strong> <span id="modalAuthor"></span></p>
             <p><strong>Redaktør:</strong> <span id="modalEditor"></span></p>
+            <p><strong>Dato:</strong> <span id="modalDate"></span></p>
         </div>
     </div>
     
     <script>
-        function openModal(image, title, text, author, editor) {
+        function openModal(image, title, text, author, editor, date) {
             document.getElementById('modalImage').src = image;
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalText').innerText = text;
             document.getElementById('modalAuthor').innerText = author;
             document.getElementById('modalEditor').innerText = editor;
+            document.getElementById('modalDate').innerText = date;
             document.getElementById('newsModal').style.display = 'flex';
         }
 
