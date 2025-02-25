@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школьные новости</title>
+    <title>Skolenyheter</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -109,30 +109,30 @@
 </head>
 <body>
     <header>
-        <h1>Новости школы</h1>
+        <h1>Skolenyheter</h1>
     </header>
     <main>
         <section class="news-container">
             <div class="news-column">
-                <h2>Новости этой недели</h2>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 1', 'Полный текст новости 1...', 'Иван Иванов', 'Мария Петрова')">
-                    <img src="news1.jpg" alt="Новость 1">
-                    <h3>Новость 1</h3>
+                <h2>Denne ukens nyheter</h2>
+                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 1', 'Full tekst for nyhet 1...', 'Ivan Ivanov', 'Maria Petrova')">
+                    <img src="news1.jpg" alt="Nyhet 1">
+                    <h3>Nyhet 1</h3>
                 </article>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 2', 'Полный текст новости 2...', 'Алексей Смирнов', 'Ольга Сидорова')">
-                    <img src="news1.jpg" alt="Новость 2">
-                    <h3>Новость 2</h3>
+                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 2', 'Full tekst for nyhet 2...', 'Alexey Smirnov', 'Olga Sidorova')">
+                    <img src="news1.jpg" alt="Nyhet 2">
+                    <h3>Nyhet 2</h3>
                 </article>
             </div>
             <div class="news-column">
-                <h2>Новости прошлой недели</h2>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 3', 'Полный текст новости 3...', 'Екатерина Белова', 'Павел Козлов')">
-                    <img src="news1.jpg" alt="Новость 3">
-                    <h3>Новость 3</h3>
+                <h2>Forrige ukes nyheter</h2>
+                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 3', 'Full tekst for nyhet 3...', 'Ekaterina Belova', 'Pavel Kozlov')">
+                    <img src="news1.jpg" alt="Nyhet 3">
+                    <h3>Nyhet 3</h3>
                 </article>
-                <article class="news-item" onclick="openModal('news1.jpg', 'Новость 4', 'Полный текст новости 4...', 'Сергей Васильев', 'Анна Орлова')">
-                    <img src="news1.jpg" alt="Новость 4">
-                    <h3>Новость 4</h3>
+                <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 4', 'Full tekst for nyhet 4...', 'Sergey Vasilyev', 'Anna Orlova')">
+                    <img src="news1.jpg" alt="Nyhet 4">
+                    <h3>Nyhet 4</h3>
                 </article>
             </div>
         </section>
@@ -141,11 +141,11 @@
     <div id="newsModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <img id="modalImage" src="" alt="Новость">
+            <img id="modalImage" src="" alt="Nyhet">
             <h2 id="modalTitle"></h2>
             <p id="modalText"></p>
-            <p><strong>Автор:</strong> <span id="modalAuthor"></span></p>
-            <p><strong>Редактор:</strong> <span id="modalEditor"></span></p>
+            <p><strong>Forfatter:</strong> <span id="modalAuthor"></span></p>
+            <p><strong>Redaktør:</strong> <span id="modalEditor"></span></p>
         </div>
     </div>
     
