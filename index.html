@@ -28,18 +28,20 @@
         }
         .news-item {
             background: #1e1e1e;
-            padding: 15px;
+            padding: 10px;
             margin: 10px 0;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: background 0.3s, transform 0.3s;
             width: 80%;
-            max-width: 800px;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
         }
         .news-item img {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 8px;
             margin-right: 15px;
         }
@@ -50,7 +52,8 @@
         .date {
             font-size: 0.9rem;
             color: #b0b0b0;
-            margin-bottom: 10px;
+            margin: 10px 0;
+            font-weight: bold;
         }
         .modal {
             display: none;
@@ -62,8 +65,8 @@
             background-color: rgba(0, 0, 0, 0.7);
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s;
         }
+
         .modal-content {
             background: #1e1e1e;
             padding: 20px;
@@ -72,28 +75,41 @@
             max-height: 80vh;
             overflow-y: auto;
             color: #e0e0e0;
-            animation: slideIn 0.3s;
             text-align: left;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         }
-        .modal img {
-            width: 100%;
-            max-height: 250px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal.hide .modal-content {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
         .close {
             float: right;
             font-size: 24px;
             cursor: pointer;
             color: #e0e0e0;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideIn {
-            from { transform: translateY(-20px); }
-            to { transform: translateY(0); }
         }
     </style>
 </head>
@@ -103,35 +119,47 @@
     </header>
     <main>
         <section class="news-list">
+            <p class="date">12.12.1212</p>
             <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 1', 'Full tekst for nyhet 1...', 'Ivan Ivanov', 'Maria Petrova', '12.12.1212')">
-                <p class="date">12.12.1212</p>
                 <img src="news1.jpg" alt="Nyhet 1">
                 <div>
                     <h3>Nyhet 1</h3>
                     <p>Korte beskrivelse av nyheten...</p>
                 </div>
             </article>
-            <article class="news-item" onclick="openModal('news2.jpg', 'Nyhet 2', 'Full tekst for nyhet 2...', 'Alexey Smirnov', 'Olga Sidorova', '13.12.1212')">
-                <p class="date">13.12.1212</p>
+
+            <p class="date">14.12.1212</p>
+            <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 2', 'Full tekst for nyhet 2...', 'Olga Smirnova', 'Alexey Petrov', '14.12.1212')">
                 <img src="news1.jpg" alt="Nyhet 2">
                 <div>
                     <h3>Nyhet 2</h3>
                     <p>Korte beskrivelse av nyheten...</p>
                 </div>
             </article>
-            <article class="news-item" onclick="openModal('news3.jpg', 'Nyhet 3', 'Full tekst for nyhet 3...', 'Ekaterina Belova', 'Pavel Kozlov', '14.12.1212')">
-                <p class="date">14.12.1212</p>
+
+            <p class="date">16.12.1212</p>
+            <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 3', 'Full tekst for nyhet 3...', 'Anders Hansen', 'Eva Larsen', '16.12.1212')">
                 <img src="news1.jpg" alt="Nyhet 3">
                 <div>
                     <h3>Nyhet 3</h3>
                     <p>Korte beskrivelse av nyheten...</p>
                 </div>
             </article>
-            <article class="news-item" onclick="openModal('news4.jpg', 'Nyhet 4', 'Full tekst for nyhet 4...', 'Sergey Vasilyev', 'Anna Orlova', '15.12.1212')">
-                <p class="date">15.12.1212</p>
+
+            <p class="date">18.12.1212</p>
+            <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 4', 'Full tekst for nyhet 4...', 'Lars Johansen', 'Sara Berg', '18.12.1212')">
                 <img src="news1.jpg" alt="Nyhet 4">
                 <div>
                     <h3>Nyhet 4</h3>
+                    <p>Korte beskrivelse av nyheten...</p>
+                </div>
+            </article>
+
+            <p class="date">20.12.1212</p>
+            <article class="news-item" onclick="openModal('news1.jpg', 'Nyhet 5', 'Full tekst for nyhet 5...', 'Emma Olsen', 'Markus Eriksen', '20.12.1212')">
+                <img src="news1.jpg" alt="Nyhet 5">
+                <div>
+                    <h3>Nyhet 5</h3>
                     <p>Korte beskrivelse av nyheten...</p>
                 </div>
             </article>
@@ -149,21 +177,51 @@
             <p><strong>Dato:</strong> <span id="modalDate"></span></p>
         </div>
     </div>
-    
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyArWEGdNkRtiY1SsJSuEduHCLGYkRT4N4E",
+          authDomain: "site-schoole-news.firebaseapp.com",
+          projectId: "site-schoole-news",
+          storageBucket: "site-schoole-news.firebasestorage.app",
+          messagingSenderId: "597061245377",
+          appId: "1:597061245377:web:4e716cda92635086a17740",
+          measurementId: "G-JKBZT0Z12H"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
     <script>
         function openModal(image, title, text, author, editor, date) {
-            document.getElementById('modalImage').src = image;
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalText').innerText = text;
-            document.getElementById('modalAuthor').innerText = author;
-            document.getElementById('modalEditor').innerText = editor;
-            document.getElementById('modalDate').innerText = date;
-            document.getElementById('newsModal').style.display = 'flex';
+        const modal = document.getElementById('newsModal');
+        document.getElementById('modalImage').src = image;
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalText').innerText = text;
+        document.getElementById('modalAuthor').innerText = author;
+        document.getElementById('modalEditor').innerText = editor;
+        document.getElementById('modalDate').innerText = date;
+
+        modal.classList.add('show');
+        modal.classList.remove('hide'); // Убираем класс скрытия, если он был
         }
 
         function closeModal() {
-            document.getElementById('newsModal').style.display = 'none';
+            const modal = document.getElementById('newsModal');
+            modal.classList.add('hide');
+            setTimeout(() => {
+                modal.classList.remove('show', 'hide');
+            }, 300); // Ожидание завершения анимации перед скрытием
         }
+
     </script>
 </body>
 </html>
