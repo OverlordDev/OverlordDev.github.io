@@ -36,7 +36,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.3s;
             display: flex;
             align-items: center;
         }
@@ -48,6 +48,7 @@
         }
         .news-item:hover {
             background: #333333;
+            transform: scale(1.05);
         }
         .modal {
             display: none;
@@ -59,6 +60,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             align-items: center;
             justify-content: center;
+            animation: fadeIn 0.3s;
         }
         .modal-content {
             background: #1e1e1e;
@@ -66,12 +68,21 @@
             border-radius: 8px;
             width: 50%;
             color: #e0e0e0;
+            animation: slideIn 0.3s;
         }
         .close {
             float: right;
             font-size: 24px;
             cursor: pointer;
             color: #e0e0e0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
         }
     </style>
 </head>
@@ -84,7 +95,7 @@
             <div class="news-column">
                 <h2>Новости этой недели</h2>
                 <article class="news-item" onclick="openModal('Новость 1', 'Подробное описание новости 1')">
-                    <img src="news1.png" alt="Новость 1">
+                    <img src="news1.jpg" alt="Новость 1">
                     <div>
                         <h3>Новость 1</h3>
                         <p>Краткое описание новости...</p>
