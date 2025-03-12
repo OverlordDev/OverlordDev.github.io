@@ -54,8 +54,16 @@ function openModal(image, title, text, author, editor, date) {
     
         newsList.appendChild(article);
     }
+    function filterNews() {
+        const query = document.getElementById('search').value.toLowerCase();
+        document.querySelectorAll('.news-item').forEach(item => {
+            const title = item.querySelector('h3').textContent.toLowerCase();
+            item.style.display = title.includes(query) ? 'flex' : 'none';
+        });
+    }
+    
     
     // Пример добавления новости
-    addNews('news1.jpg', 'Nyhet 6', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
-    addNews('news1.jpg', 'Nyhet 6', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
-    addNews('news1.jpg', 'Nyhet 6', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
+    addNews('news1.jpg', 'Nyhet 5', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
+    addNews('news1.jpg', 'Nyhet 2', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
+    addNews('news1.jpg', 'Nyhet 1', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
