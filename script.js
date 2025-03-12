@@ -1,7 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://cxebkrlkhzlymzkafvdh.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
+
 
 function openModal(image, title, text, author, editor, date) {
     const modal = document.getElementById('newsModal');
