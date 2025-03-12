@@ -8,7 +8,7 @@ function openModal(image, title, text, author, editor, date) {
     document.getElementById('modalDate').innerText = date;
 
     modal.classList.add('show');
-    modal.classList.remove('hide'); // Убираем класс скрытия, если он был
+    modal.classList.remove('hide'); 
     }
 
     function closeModal() {
@@ -16,13 +16,10 @@ function openModal(image, title, text, author, editor, date) {
         modal.classList.add('hide');
         setTimeout(() => {
             modal.classList.remove('show', 'hide');
-        }, 300); // Ожидание завершения анимации перед скрытием
+        }, 300); 
     }
-
     function addNews(image, title, shortText, fullText, author, editor, date) {
         const newsList = document.querySelector('.news-list');
-    
-        // Создание даты, если она изменилась
         let lastDate = newsList.lastElementChild?.getAttribute('data-date');
         if (lastDate !== date) {
             const dateElement = document.createElement('p');
@@ -31,8 +28,6 @@ function openModal(image, title, text, author, editor, date) {
             dateElement.setAttribute('data-date', date);
             newsList.appendChild(dateElement);
         }
-    
-        // Создание элемента новости
         const article = document.createElement('article');
         article.className = 'news-item';
         article.setAttribute('onclick', `openModal('${image}', '${title}', '${fullText}', '${author}', '${editor}', '${date}')`);
@@ -61,9 +56,16 @@ function openModal(image, title, text, author, editor, date) {
             item.style.display = title.includes(query) ? 'flex' : 'none';
         });
     }
+    window.addEventListener('load', () => {
+        const loadingScreen = document.getElementById('loadingScreen');
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0'; 
+        }, 100); 
+        setTimeout(() => {
+            loadingScreen.style.display = 'none'; 
+        }, 600); 
+    });
     
-    
-    // Пример добавления новости
-    addNews('news1.jpg', 'Nyhet 5', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
+    addNews('news1.jpg', 'Nyhet 5', 'Kort beskrivelse...', 'Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
     addNews('news1.jpg', 'Nyhet 2', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
     addNews('news1.jpg', 'Nyhet 1', 'Kort beskrivelse...', 'Full tekst...', 'Anna Nilsen', 'Ole Olsen', '22.12.1212');
