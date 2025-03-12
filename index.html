@@ -5,6 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skolenyheter</title>
     <style>
+        @media (max-width: 768px) {
+            .news-list {
+                margin: 10px;
+            }
+
+            .news-item {
+                width: 95%;
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+
+            .news-item img {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 10px;
+            }
+
+            .modal-content {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .close {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 1.2rem;
+                padding: 10px 0;
+            }
+
+            .news-item {
+                width: 100%;
+            }
+
+            .news-item h3 {
+                font-size: 1rem;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .modal-content img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
         #search {
             width: 80%;
             max-width: 400px;
