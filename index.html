@@ -6,224 +6,133 @@
     <title>Skolenyheter</title>
     <style>
         @media (max-width: 768px) {
-            .news-list {
-                margin: 10px;
-            }
-
-            .news-item {
-                width: 95%;
-                flex-direction: column;
-                text-align: center;
-                padding: 15px;
-            }
-
-            .news-item img {
-                width: 80px;
-                height: 80px;
-                margin-bottom: 10px;
-            }
-
-            .modal-content {
-                width: 90%;
-                padding: 15px;
-            }
-
-            .close {
-                font-size: 28px;
-            }
+            .news-list { margin: 10px; }
+            .news-item { width: 95%; flex-direction: column; text-align: center; padding: 15px; }
+            .news-item img { width: 80px; height: 80px; margin-bottom: 10px; }
+            .modal-content { width: 90%; padding: 15px; }
+            .close { font-size: 28px; }
         }
 
         @media (max-width: 480px) {
-            header {
-                font-size: 1.2rem;
-                padding: 10px 0;
-            }
-
-            .news-item {
-                width: 100%;
-            }
-
-            .news-item h3 {
-                font-size: 1rem;
-            }
-
-            .modal-content {
-                width: 95%;
-            }
-
-            .modal-content img {
-                max-width: 100%;
-                height: auto;
-            }
+            header { font-size: 1.2rem; padding: 10px 0; }
+            .news-item { width: 100%; }
+            .news-item h3 { font-size: 1rem; }
+            .modal-content { width: 95%; }
+            .modal-content img { max-width: 100%; height: auto; }
         }
+
         #search {
-            width: 80%;
-            max-width: 400px;
-            padding: 10px;
-            margin: 20px auto;
-            display: block;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            width: 80%; max-width: 400px; padding: 10px; margin: 20px auto; display: block;
+            border: none; border-radius: 8px; font-size: 1rem; background-color: #1e1e1e;
+            color: #e0e0e0; box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); transition: all 0.3s ease;
         }
 
         #search:focus {
-            outline: none;
-            background-color: #292929;
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            outline: none; background-color: #292929; box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
         }
 
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #e0e0e0;
-            text-align: center;
+            font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #121212;
+            color: #e0e0e0; text-align: center;
         }
+
         header {
-            background-color: #1f1f1f;
-            color: #ffffff;
-            padding: 15px 0;
-            font-size: 1.5rem;
+            background-color: #1f1f1f; color: #ffffff; padding: 15px 0; font-size: 1.5rem;
         }
+
         .news-list {
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 20px; display: flex; flex-direction: column; align-items: center;
         }
+
         .news-item {
-            background: #1e1e1e;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-            width: 80%;
-            max-width: 600px;
-            display: flex;
-            align-items: center;
+            background: #1e1e1e; padding: 10px; margin: 10px 0; border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); cursor: pointer;
+            transition: background 0.3s, transform 0.3s; width: 80%; max-width: 600px;
+            display: flex; align-items: center;
         }
+
         .news-item img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            margin-right: 15px;
+            width: 60px; height: 60px; border-radius: 8px; margin-right: 15px;
         }
+
         .news-item:hover {
-            background: #333333;
-            transform: scale(1.05);
+            background: #333333; transform: scale(1.05);
         }
+
         .date {
-            font-size: 0.9rem;
-            color: #b0b0b0;
-            margin: 10px 0;
-            font-weight: bold;
+            font-size: 0.9rem; color: #b0b0b0; margin: 10px 0; font-weight: bold;
         }
+
         .modal {
-            display: none;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            align-items: center;
-            justify-content: center;
+            display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #252525, #1a1a1a);
-            padding: 20px;
-            border-radius: 12px;
-            width: 50%;
-            max-height: 80vh;
-            overflow-y: auto;
-            color: #e0e0e0;
-            text-align: left;
-            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            background: linear-gradient(135deg, #252525, #1a1a1a); padding: 20px; border-radius: 12px;
+            width: 50%; max-height: 80vh; overflow-y: auto; color: #e0e0e0; text-align: left;
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1); transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         }
+
         .modal-content img {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;
         }
+
+        .modal-content ul {
+            padding-left: 20px; margin: 10px 0;
+        }
+
+        .modal-content li {
+            margin-bottom: 5px;
+        }
+
+        .modal-content iframe {
+            width: 100%; height: 315px; border-radius: 8px; margin-top: 15px;
+        }
+
         .modal.show {
-            display: flex;
-            animation: fadeIn 0.3s;
+            display: flex; animation: fadeIn 0.3s;
         }
 
         .modal.show .modal-content {
-            transform: translateY(0);
-            opacity: 1;
+            transform: translateY(0); opacity: 1;
         }
 
         .modal.hide .modal-content {
-            transform: translateY(-20px);
-            opacity: 0;
+            transform: translateY(-20px); opacity: 0;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; } to { opacity: 1; }
         }
 
         @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+            from { opacity: 1; } to { opacity: 0; }
         }
+
         .close {
-            font-size: 28px;
-            font-weight: bold;
-            color: #ff4c4c;
-            transition: transform 0.2s;
+            font-size: 28px; font-weight: bold; color: #ff4c4c; transition: transform 0.2s;
         }
 
         .close:hover {
-            transform: scale(1.2);
-            cursor: pointer;
-            color: #ff6b6b;
+            transform: scale(1.2); cursor: pointer; color: #ff6b6b;
         }
-        /* Стиль для экрана загрузки */
+
         .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #121212;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease-out; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #121212;
+            display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 1;
+            transition: opacity 0.5s ease-out;
         }
+
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #e0e0e0;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
+            border: 4px solid #f3f3f3; border-top: 4px solid #e0e0e0; border-radius: 50%;
+            width: 50px; height: 50px; animation: spin 1s linear infinite;
         }
 
-        /* Анимация вращения */
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }
         }
-
     </style>
 </head>
 <body>
@@ -232,25 +141,160 @@
     </header>
     <main>
         <input type="text" id="search" placeholder="Søk etter nyheter..." oninput="filterNews()">
-        <section class="news-list">
-        </section>
+        <section class="news-list"></section>
     </main>
     <div id="loadingScreen" class="loading-screen">
         <div class="spinner"></div>
     </div>
-    
     <div id="newsModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal()">×</span>
             <img id="modalImage" src="" alt="Nyhet">
             <h2 id="modalTitle"></h2>
             <p id="modalText"></p>
+            <div id="modalVideo"></div>
             <p><strong>Forfatter:</strong> <span id="modalAuthor"></span></p>
             <p><strong>Redaktør:</strong> <span id="modalEditor"></span></p>
             <p><strong>Dato:</strong> <span id="modalDate"></span></p>
         </div>
     </div>
-    <script src="script.js">
+
+    <script>
+        function formatText(text) {
+            const lines = text.split('\n');
+            let result = '';
+            let inList = false;
+
+            lines.forEach(line => {
+                line = line.trim();
+                if (line.startsWith('—')) {
+                    if (!inList) {
+                        result += '<ul>';
+                        inList = true;
+                    }
+                    result += `<li>${line.substring(1).trim()}</li>`;
+                } else {
+                    if (inList) {
+                        result += '</ul>';
+                        inList = false;
+                    }
+                    if (line) {
+                        result += `<p>${line}</p>`;
+                    }
+                }
+            });
+
+            if (inList) {
+                result += '</ul>';
+            }
+
+            return result;
+        }
+
+        function getYouTubeEmbedUrl(url) {
+            // Извлекаем ID видео из URL
+            const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+            return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : '';
+        }
+
+        function openModal(image, title, text, author, editor, date, videoUrl) {
+            const modal = document.getElementById('newsModal');
+            document.getElementById('modalImage').src = image;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerHTML = formatText(text);
+            document.getElementById('modalAuthor').innerText = author;
+            document.getElementById('modalEditor').innerText = editor;
+            document.getElementById('modalDate').innerText = date;
+
+            // Обработка видео
+            const videoContainer = document.getElementById('modalVideo');
+            if (videoUrl) {
+                const embedUrl = getYouTubeEmbedUrl(videoUrl);
+                if (embedUrl) {
+                    videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`;
+                } else {
+                    videoContainer.innerHTML = ''; // Если URL некорректный, очищаем контейнер
+                }
+            } else {
+                videoContainer.innerHTML = ''; // Если видео не передано, очищаем контейнер
+            }
+
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('newsModal');
+            modal.classList.add('hide');
+            setTimeout(() => {
+                modal.classList.remove('show', 'hide');
+                // Очищаем видео при закрытии модального окна
+                document.getElementById('modalVideo').innerHTML = '';
+            }, 300);
+        }
+
+        function addNews(image, title, shortText, fullText, author, editor, date, videoUrl) {
+            const newsList = document.querySelector('.news-list');
+            let lastDate = newsList.lastElementChild?.getAttribute('data-date');
+            if (lastDate !== date) {
+                const dateElement = document.createElement('p');
+                dateElement.className = 'date';
+                dateElement.textContent = date;
+                dateElement.setAttribute('data-date', date);
+                newsList.appendChild(dateElement);
+            }
+            const article = document.createElement('article');
+            article.className = 'news-item';
+            article.addEventListener('click', () => {
+                openModal(image, title, fullText, author, editor, date, videoUrl);
+            });
+
+            const img = document.createElement('img');
+            img.src = image;
+            img.alt = title;
+
+            const textDiv = document.createElement('div');
+            const h3 = document.createElement('h3');
+            h3.textContent = title;
+            const p = document.createElement('p');
+            p.textContent = shortText;
+
+            textDiv.appendChild(h3);
+            textDiv.appendChild(p);
+            article.appendChild(img);
+            article.appendChild(textDiv);
+
+            newsList.appendChild(article);
+        }
+
+        function filterNews() {
+            const query = document.getElementById('search').value.toLowerCase();
+            document.querySelectorAll('.news-item').forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                item.style.display = title.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loadingScreen');
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+            }, 100);
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 600);
+        });
+
+        addNews(
+            'news1.jpg',
+            '🎉 Vinterball 2025 ❄️\nTresfjord skole',
+            'Les videre',
+            'Dette vinterballet arrangeres hvert år på Tresfjord skole og samler barn fra hele kommunen. Det er en spesiell begivenhet som forener elever, skaper feststemning og gir følelsen av et ekte vintereventyr.\n👫 I salen hersker det en magisk atmosfære fylt med glede og fellesskap. Elevene kler seg i vakre kjoler og pene antrekk, deltar i dans og nyter kveldens festprogram.\n🎶 Kveldens program:\n— Høytidelig åpning av ballet\n— Danseopptredener\n— DJ og dans utover kvelden\n— Kåring av Ballkongen og Ballprinsessen\n— Musikk, glede og uforglemmelige minner\n✨ Vinterballet på Tresfjord skole er ikke bare en fest, men en glitrende opplevelse som alle ser frem til hele året!',
+            'Anna Nilsen',
+            'Ole Olsen',
+            '22.12.1212',
+            'https://youtu.be/zaalCxbux34' // Пример ссылки на видео
+        );
     </script>
 </body>
 </html>
