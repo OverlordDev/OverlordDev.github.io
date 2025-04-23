@@ -3,365 +3,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Siste nyheter fra Tresfjord Skole: arrangementer, begivenheter og mer.">
     <title>Skolenyheter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* CSS-переменные для тем */
+        :root {
+            /* Темная тема (по умолчанию) */
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1c1c1c;
+            --accent-blue: #00b7eb;
+            --accent-purple: #8b5cf6;
+            --text-color: #e5e7eb;
+            --muted-text: #9ca3af;
+            --border-radius: 12px;
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+            --hero-bg-start: rgba(0, 183, 235, 0.2);
+            --hero-bg-end: rgba(139, 92, 246, 0.2);
+        }
+
+        /* Светлая тема */
+        [data-theme="light"] {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f3f4f6;
+            --accent-blue: #0284c7;
+            --accent-purple: #7c3aed;
+            --text-color: #1f2937;
+            --muted-text: #4b5563;
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --hero-bg-start: rgba(2, 132, 199, 0.1);
+            --hero-bg-end: rgba(124, 58, 237, 0.1);
+        }
+
+        /* Липкий футер */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
         /* Базовые стили */
         body {
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background-color: #121212;
-            color: #e0e0e0; 
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
             text-align: center;
+            line-height: 1.6;
+            transition: var(--transition);
         }
 
         header {
-            background-color: #1f1f1f; 
-            color: #ffffff; 
-            padding: 15px 0; 
+            background: linear-gradient(135deg, var(--secondary-bg), var(--primary-bg));
+            padding: 15px 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        header h1 {
             font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 0;
+            animation: fadeInText 0.5s ease-out;
+        }
+
+        header img.logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-blue);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--hero-bg-start), var(--hero-bg-end));
+            padding: 50px 20px;
+            margin: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] .hero {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        [data-theme="light"] .hero::before {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .hero h2, .hero p {
+            position: relative;
+            z-index: 2;
+            animation: fadeInText 0.7s ease-out;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            margin: 0 0 15px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--muted-text);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         #search {
-            width: 80%; 
-            max-width: 400px; 
-            padding: 10px; 
-            margin: 20px auto; 
+            width: 80%;
+            max-width: 500px;
+            padding: 12px 16px;
+            margin: 25px auto;
             display: block;
-            border: none; 
-            border-radius: 8px; 
-            font-size: 1rem; 
-            background-color: #1e1e1e;
-            color: #e0e0e0; 
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); 
-            transition: all 0.3s ease;
+            border: 2px solid var(--accent-blue);
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            transition: var(--transition);
         }
 
         #search:focus {
-            outline: none; 
-            background-color: #292929; 
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            outline: none;
+            border-color: var(--accent-purple);
+            background-color: var(--primary-bg);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
         }
 
         .news-list {
-            margin: 20px; 
-            display: flex; 
-            flex-direction: column; 
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
         .news-item {
-            background: #1e1e1e; 
-            padding: 10px; 
-            margin: 10px 0; 
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); 
+            background: var(--secondary-bg);
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             cursor: pointer;
-            transition: background 0.3s, transform 0.3s; 
-            width: 80%; 
-            max-width: 600px;
-            display: flex; 
+            transition: var(--transition);
+            width: 85%;
+            max-width: 700px;
+            display: flex;
             align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .news-item img {
-            width: 60px; 
-            height: 60px; 
-            border-radius: 8px; 
-            margin-right: 15px;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
         }
 
         .news-item:hover {
-            background: #333333; 
-            transform: scale(1.05);
+            transform: translateY(-5px);
+            background: var(--primary-bg);
+            box-shadow: 0 8px 20px rgba(0, 183, 235, 0.2);
+        }
+
+        .news-item h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .news-item p {
+            margin: 5px 0 0;
+            font-size: 0.95rem;
+            color: var(--muted-text);
         }
 
         .date {
-            font-size: 0.9rem; 
-            color: #b0b0b0; 
-            margin: 10px 0; 
-            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin: 15px 0;
+            font-weight: 500;
+            text-transform: uppercase;
         }
 
         .modal {
-            display: none; 
-            position: fixed; 
-            left: 0; 
-            top: 0; 
-            width: 100%; 
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); 
-            align-items: center; 
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
             justify-content: center;
-            backdrop-filter: blur(8px);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #252525, #1a1a1a); 
-            padding: 20px; 
-            border-radius: 12px;
-            width: 50%; 
-            max-height: 80vh; 
-            overflow-y: auto; 
-            color: #e0e0e0; 
+            background: linear-gradient(135deg, var(--secondary-bg), var(--primary-bg));
+            padding: 25px;
+            border-radius: var(--border-radius);
+            width: 60%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            color: var(--text-color);
             text-align: left;
-            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1); 
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            box-shadow: var(--shadow);
+            position: relative;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: var(--secondary-bg);
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 10px;
+            border: 2px solid var(--secondary-bg);
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-purple);
+        }
+
+        .modal-content {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-blue) var(--secondary-bg);
         }
 
         .modal-content img {
-            width: 100%; 
-            max-height: 250px; 
-            object-fit: cover; 
-            border-radius: 8px; 
-            margin-bottom: 15px;
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
         }
 
         .modal-content ul {
-            padding-left: 20px; 
-            margin: 10px 0;
+            padding-left: 25px;
+            margin: 15px 0;
         }
 
         .modal-content li {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1rem;
         }
 
         .modal-content iframe {
-            width: 100%; 
-            height: 315px; 
-            border-radius: 8px; 
-            margin-top: 15px;
+            width: 100%;
+            height: 350px;
+            border-radius: 10px;
+            margin-top: 20px;
         }
 
         .photo-album {
             display: flex;
             overflow-x: auto;
-            gap: 10px;
-            margin: 15px 0;
+            gap: 12px;
+            margin: 20px 0;
             padding-bottom: 10px;
         }
 
         .photo-album img {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px;
             flex-shrink: 0;
-            transition: transform 0.3s;
+            transition: var(--transition);
         }
 
         .photo-album img:hover {
-            transform: scale(1.05);
-            cursor: pointer;
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(0, 183, 235, 0.3);
         }
 
         .modal.show {
-            display: flex; 
-            animation: fadeIn 0.3s;
+            display: flex;
+            animation: fadeIn 0.4s ease-out;
         }
 
         .modal.show .modal-content {
-            transform: translateY(0); 
+            transform: translateY(0);
             opacity: 1;
         }
 
         .modal.hide .modal-content {
-            transform: translateY(-20px); 
+            transform: translateY(-20px);
             opacity: 0;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes fadeOut {
-            from { opacity: 1; } to { opacity: 0; }
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .close {
-            font-size: 28px; 
-            font-weight: bold; 
-            color: #ff4c4c; 
-            transition: transform 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-size: 24px;
+            color: #ff7878;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 2;
         }
 
         .close:hover {
-            transform: scale(1.2); 
-            cursor: pointer; 
-            color: #ff6b6b;
+            color: #ff5555;
         }
 
         .loading-screen {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: #121212;
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 9999; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
             opacity: 1;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 0.4s ease-out;
         }
 
         .spinner {
-            border: 4px solid #f3f3f3; 
-            border-top: 4px solid #e0e0e0; 
+            border: 5px solid var(--muted-text);
+            border-top: 5px solid var(--accent-purple);
             border-radius: 50%;
-            width: 50px; 
-            height: 50px; 
-            animation: spin 1s linear infinite;
+            width: 60px;
+            height: 60px;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Адаптация для экранов до 768px (планшеты и мобильные устройства) */
+        footer {
+            flex-shrink: 0;
+            background: var(--secondary-bg);
+            padding: 20px 0;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: var(--muted-text);
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: var(--accent-purple);
+        }
+
+        /* Адаптация для экранов до 768px */
         @media (max-width: 768px) {
-            .news-list { 
-                margin: 10px; 
+            .hero {
+                padding: 40px 15px;
+                margin: 15px;
             }
 
-            .news-item { 
-                width: 95%; 
-                flex-direction: column; 
-                text-align: center; 
-                padding: 15px; 
+            .hero h2 {
+                font-size: 1.6rem;
             }
 
-            .news-item img { 
-                width: 80px; 
-                height: 80px; 
-                margin-bottom: 10px; 
-                margin-right: 0; 
+            .hero p {
+                font-size: 1.1rem;
             }
 
-            .modal-content { 
-                width: 90%; /* Увеличиваем ширину модального окна */
-                padding: 15px; 
-                max-height: 90vh; /* Увеличиваем максимальную высоту */
+            .news-list {
+                margin: 15px;
             }
 
-            .modal-content h2 {
-                font-size: 1.5rem; /* Увеличиваем заголовок */
-            }
-
-            .modal-content p {
-                font-size: 1rem; /* Увеличиваем текст */
-                line-height: 1.5; /* Улучшаем читаемость */
-            }
-
-            .modal-content img {
-                max-height: 200px; /* Уменьшаем высоту основного изображения */
-            }
-
-            .photo-album img {
-                width: 120px; /* Уменьшаем размер фотографий в альбоме */
-                height: 120px;
-            }
-
-            .modal-content iframe {
-                height: 200px; /* Уменьшаем высоту видео */
-            }
-
-            .close { 
-                font-size: 28px; 
-            }
-        }
-
-        /* Адаптация для экранов до 480px (маленькие мобильные устройства) */
-        @media (max-width: 480px) {
-            header { 
-                font-size: 1.2rem; 
-                padding: 10px 0; 
-            }
-
-            #search {
-                width: 90%; /* Увеличиваем ширину поля поиска */
-                font-size: 0.9rem;
-            }
-
-            .news-item { 
-                width: 100%; 
-                padding: 10px; 
-            }
-
-            .news-item h3 { 
-                font-size: 1rem; 
+            .news-item {
+                width: 90%;
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+                gap: 15px;
             }
 
             .news-item img {
-                width: 60px;
-                height: 60px;
+                width: 100px;
+                height: 100px;
+                margin-bottom: 10px;
             }
 
-            .modal-content { 
-                width: 95%; /* Еще больше увеличиваем ширину */
-                padding: 10px; 
-                max-height: 95vh; /* Максимальная высота почти на весь экран */
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+                max-height: 90vh;
             }
 
             .modal-content h2 {
-                font-size: 1.3rem; /* Уменьшаем заголовок для маленьких экранов */
+                font-size: 1.6rem;
             }
 
             .modal-content p {
-                font-size: 0.9rem; /* Уменьшаем текст для маленьких экранов */
-                line-height: 1.4;
+                font-size: 1rem;
+                line-height: 1.6;
             }
 
             .modal-content img {
-                max-height: 150px; /* Еще уменьшаем основное изображение */
+                height: 220px;
+                margin-top: 40px;
             }
 
             .photo-album img {
-                width: 100px; /* Еще уменьшаем фотографии в альбоме */
-                height: 100px;
+                width: 130px;
+                height: 130px;
             }
 
             .modal-content iframe {
-                height: 180px; /* Уменьшаем высоту видео для маленьких экранов */
+                height: 220px;
+            }
+
+            .close {
+                top: 8px;
+                right: 15px;
+                font-size: 20px;
+            }
+        }
+
+        /* Адаптация для экранов до 480px */
+        @media (max-width: 480px) {
+            header {
+                padding: 10px 15px;
+            }
+
+            header h1 {
+                font-size: 1.2rem;
+            }
+
+            header img.logo {
+                width: 30px;
+                height: 30px;
+            }
+
+            .hero {
+                padding: 30px 10px;
+                margin: 10px;
+            }
+
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            #search {
+                width: 90%;
+                font-size: 0.95rem;
+            }
+
+            .news-item {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .news-item h3 {
+                font-size: 1.1rem;
+            }
+
+            .news-item img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+                max-height: 95vh;
+            }
+
+            .modal-content h2 {
+                font-size: 1.4rem;
+            }
+
+            .modal-content p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+
+            .modal-content img {
+                height: 180px;
+                margin-top: 35px;
+            }
+
+            .photo-album img {
+                width: 110px;
+                height: 110px;
+            }
+
+            .modal-content iframe {
+                height: 200px;
             }
 
             .modal-content ul {
-                padding-left: 15px; /* Уменьшаем отступ для списка */
+                padding-left: 15px;
             }
 
             .modal-content li {
                 font-size: 0.9rem;
             }
+
+            .close {
+                top: 6px;
+                right: 10px;
+                font-size: 18px;
+            }
+        }
+
+        /* Скрытый label для доступности */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Skolenyheter</h1>
-    </header>
-    <main>
-        <input type="text" id="search" placeholder="Søk etter nyheter..." oninput="filterNews()">
-        <section class="news-list"></section>
-    </main>
-    <div id="loadingScreen" class="loading-screen">
-        <div class="spinner"></div>
-    </div>
-    <div id="newsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">×</span>
-            <img id="modalImage" src="" alt="Nyhet">
-            <h2 id="modalTitle"></h2>
-            <p id="modalText"></p>
-            <div id="modalPhotoAlbum" class="photo-album"></div>
-            <div id="modalVideo"></div>
-            <p><strong>Forfatter:</strong> <span id="modalAuthor"></span></p>
-            <p><strong>Redaktør:</strong> <span id="modalEditor"></span></p>
-            <p><strong>Dato:</strong> <span id="modalDate"></span></p>
+    <div class="page-wrapper">
+        <header>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="logo.png" alt="Tresfjord Skole Logo" class="logo">
+                <h1>Skolenyheter</h1>
+            </div>
+            <button class="theme-toggle" aria-label="Bytt tema" onclick="toggleTheme()">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </header>
+        <div class="hero">
+            <h2>Velkommen til Tresfjord Skole Nyheter!</h2>
+            <p>Følg med på de siste begivenhetene, arrangementene og prestasjonene fra vår skole.</p>
+        </div>
+        <main>
+            <label for="search" class="visually-hidden">Søk etter nyheter</label>
+            <input type="text" id="search" placeholder="Søk etter nyheter..." oninput="filterNews()">
+            <section class="news-list"></section>
+        </main>
+        <div id="loadingScreen" class="loading-screen">
+            <div class="spinner"></div>
+        </div>
+        <div id="newsModal" class="modal">
+            <div class="modal-content">
+                <button class="close" aria-label="Lukk modalvindu" onclick="closeModal()">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="#ff7878">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="#ff7878" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <img id="modalImage" src="" alt="Nyhet">
+                <h2 id="modalTitle"></h2>
+                <div id="modalText"></div>
+                <div id="modalPhotoAlbum" class="photo-album"></div>
+                <div id="modalVideo"></div>
+                <p><strong>Forfatter:</strong> <span id="modalAuthor"></span></p>
+                <p><strong>Redaktør:</strong> <span id="modalEditor"></span></p>
+                <p><strong>Dato:</strong> <span id="modalDate"></span></p>
+            </div>
         </div>
     </div>
+    <footer>
+        <p>© 2025 Tresfjord Skole. Alle rettigheter reservert.</p>
+        <p>
+            <a href="mailto:info@tresfjordskole.no">Kontakt oss</a> |
+            <a href="https://facebook.com/tresfjordskole">Facebook</a> |
+            <a href="https://instagram.com/tresfjordskole">Instagram</a>
+        </p>
+    </footer>
 
     <script>
+        // Переключение темы
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.dataset.theme === 'light' ? 'dark' : 'light';
+            body.dataset.theme = currentTheme;
+            document.getElementById('themeIcon').textContent = currentTheme === 'light' ? '🌙' : '☀️';
+            localStorage.setItem('theme', currentTheme);
+        }
+
+        // Загрузка сохраненной темы
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.dataset.theme = savedTheme;
+                document.getElementById('themeIcon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+            }
+        });
+
+        function sanitizeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function formatText(text) {
             const lines = text.split('\n');
             let result = '';
@@ -374,14 +693,14 @@
                         result += '<ul>';
                         inList = true;
                     }
-                    result += `<li>${line.substring(1).trim()}</li>`;
+                    result += `<li>${sanitizeHTML(line.substring(1).trim())}</li>`;
                 } else {
                     if (inList) {
                         result += '</ul>';
                         inList = false;
                     }
                     if (line) {
-                        result += `<p>${line}</p>`;
+                        result += `<p>${sanitizeHTML(line)}</p>`;
                     }
                 }
             });
@@ -395,19 +714,22 @@
 
         function getYouTubeEmbedUrl(url) {
             const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-            return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : '';
+            if (!videoIdMatch) {
+                console.warn('Invalid YouTube URL:', url);
+                return '';
+            }
+            return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
         }
 
         function openModal(image, title, text, author, editor, date, videoUrl, photos) {
             const modal = document.getElementById('newsModal');
             document.getElementById('modalImage').src = image;
-            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalTitle').innerText = sanitizeHTML(title);
             document.getElementById('modalText').innerHTML = formatText(text);
-            document.getElementById('modalAuthor').innerText = author;
-            document.getElementById('modalEditor').innerText = editor;
-            document.getElementById('modalDate').innerText = date;
+            document.getElementById('modalAuthor').innerText = sanitizeHTML(author);
+            document.getElementById('modalEditor').innerText = sanitizeHTML(editor);
+            document.getElementById('modalDate').innerText = sanitizeHTML(date);
 
-            // Обработка альбома фотографий
             const photoAlbum = document.getElementById('modalPhotoAlbum');
             photoAlbum.innerHTML = '';
             if (photos && Array.isArray(photos) && photos.length > 0) {
@@ -415,12 +737,12 @@
                 limitedPhotos.forEach(photoUrl => {
                     const img = document.createElement('img');
                     img.src = photoUrl;
-                    img.alt = 'Фото из альбома';
+                    img.alt = 'Foto fra album';
+                    img.loading = 'lazy';
                     photoAlbum.appendChild(img);
                 });
             }
 
-            // Обработка видео
             const videoContainer = document.getElementById('modalVideo');
             if (videoUrl) {
                 const embedUrl = getYouTubeEmbedUrl(videoUrl);
@@ -466,6 +788,7 @@
             const img = document.createElement('img');
             img.src = image;
             img.alt = title;
+            img.loading = 'lazy';
 
             const textDiv = document.createElement('div');
             const h3 = document.createElement('h3');
@@ -485,7 +808,8 @@
             const query = document.getElementById('search').value.toLowerCase();
             document.querySelectorAll('.news-item').forEach(item => {
                 const title = item.querySelector('h3').textContent.toLowerCase();
-                item.style.display = title.includes(query) ? 'flex' : 'none';
+                const text = item.querySelector('p').textContent.toLowerCase();
+                item.style.display = (title.includes(query) || text.includes(query)) ? 'flex' : 'none';
             });
         }
 
@@ -493,27 +817,24 @@
             const loadingScreen = document.getElementById('loadingScreen');
             setTimeout(() => {
                 loadingScreen.style.opacity = '0';
-            }, 100);
+            }, 50);
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
-            }, 600);
+            }, 400);
         });
 
         addNews(
             'news01.jpg',
-            '🎉 Vinterball 2025 ❄️\nTresfjord skole',
+            '🎉 Vinterball 2025 ❄️',
             'Les videre',
-            'Dette vinterballet arrangeres hvert år på Tresfjord skole og samler barn fra hele kommunen. Det er en spesiell begivenhet som forener elever, skaper feststemning og gir følelsen av et ekte vintereventyr.\n👫 I salen hersker det en magisk atmosfære fylt med glede og fellesskap. Elevene kler seg i vakre kjoler og pene antrekk, deltar i dans og nyter kveldens festprogram.\n🎶 Kveldens program:\n— Høytidelig åpning av ballet\n— Danseopptredener\n— DJ og dans utover kvelden\n— Kåring av Ballkongen og Ballprinsessen\n— Musikk, glede og uforglemmelige minner\n✨ Vinterballet på Tresfjord skole er ikke bare en fest, но en glitrende opplevelse som alle ser frem til hele året!',
+            'Dette vinterballet arrangeres hvert år på Tresfjord skole og samler barn fra hele kommunen. Det er en spesiell begivenhet som forener elever, skaper feststemning og gir følelsen av et ekte vintereventyr.\n👫 I salen hersker det en magisk atmosfære fylt med glede og fellesskap. Elevene kler seg i vakre kjoler og pene antrekk, deltar i dans og nyter kveldens festprogram.\n🎶 Kveldens program:\n— Høytidelig åpning av ballet\n— Danseopptredener\n— DJ og dans utover kvelden\n— Kåring av Ballkongen og Ballprinsessen\n— Musikk, glede og uforglemmelige minner\n✨ Vinterballet på Tresfjord skole er ikke bare en fest, men en glitrende opplevelse som alle ser frem til hele året!',
             'Dima Toshev',
             'Dima Toshev',
             '08.02.2025',
             'https://youtu.be/zaalCxbux34',
-            [
-                'news01.jpg',
-                'news01.jpg',
-                'news01.jpg'
-            ]
+            ['news01.jpg', 'news01.jpg', 'news01.jpg']
         );
+        
     </script>
 </body>
 </html>
