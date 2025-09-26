@@ -3,854 +3,1178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Siste nyheter fra Tresfjord Skole: arrangementer, begivenheter og mer.">
-    <title>Skolenyheter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>SkoleConnect - Oslo Tekniske Skole</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+        import { getDatabase, ref, onValue, orderByKey, limitToLast } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js';
+
+        // Firebase configuration - REPLACE WITH YOUR CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyArWEGdNkRtiY1SsJSuEduHCLGYkRT4N4E",
+            authDomain: "site-schoole-news.firebaseapp.com",
+            databaseURL: "https://site-schoole-news-default-rtdb.firebaseio.com",
+            projectId: "site-schoole-news",
+            storageBucket: "site-schoole-news.firebasestorage.app",
+            messagingSenderId: "597061245377",
+            appId: "1:597061245377:web:e7973fc615b91a22a17740",
+            measurementId: "G-WQV5N2DVD8"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Make Firebase available globally
+        window.firebaseApp = app;
+        window.firebaseDatabase = database;
+        window.firebaseRef = ref;
+        window.firebaseOnValue = onValue;
+        window.firebaseOrderByKey = orderByKey;
+        window.firebaseLimitToLast = limitToLast;
+    </script>
+
     <style>
-        /* CSS-переменные для тем */
-        :root {
-            /* Темная тема (по умолчанию) */
-            --primary-bg: #0a0a0a;
-            --secondary-bg: #1c1c1c;
-            --accent-blue: #00b7eb;
-            --accent-purple: #8b5cf6;
-            --text-color: #e5e7eb;
-            --muted-text: #9ca3af;
-            --border-radius: 12px;
-            --shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-            --transition: all 0.3s ease;
-            --hero-bg-start: rgba(0, 183, 235, 0.2);
-            --hero-bg-end: rgba(139, 92, 246, 0.2);
-        }
-
-        /* Светлая тема */
-        [data-theme="light"] {
-            --primary-bg: #ffffff;
-            --secondary-bg: #f3f4f6;
-            --accent-blue: #0284c7;
-            --accent-purple: #7c3aed;
-            --text-color: #1f2937;
-            --muted-text: #4b5563;
-            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-            --hero-bg-start: rgba(2, 132, 199, 0.1);
-            --hero-bg-end: rgba(124, 58, 237, 0.1);
-        }
-
-        /* Липкий футер */
-        html, body {
-            height: 100%;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        .page-wrapper {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        main {
-            flex: 1 0 auto;
-        }
-
-        /* Базовые стили */
         body {
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--primary-bg);
-            color: var(--text-color);
-            text-align: center;
+            background: #0a0a0a;
+            color: #ffffff;
             line-height: 1.6;
-            transition: var(--transition);
+            overflow-x: hidden;
         }
 
-        header {
-            background: linear-gradient(135deg, var(--secondary-bg), var(--primary-bg));
-            padding: 15px 20px;
-            box-shadow: var(--shadow);
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            border-bottom: 3px solid #ffffff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            align-items: center;
         }
 
-        header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin: 0;
-            animation: fadeInText 0.5s ease-out;
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 5px;
         }
 
-        header .logo {
-            width: 40px;
-            height: 40px;
+        .school-name {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 10px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-menu a:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            fill: rgba(255, 255, 255, 1); /* Белый цвет для тёмной темы */
-            transition: var(--transition); /* Плавный переход цвета */
+            padding: 10px 15px;
+            font-size: 14px;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
         }
 
-        /* Чёрный цвет лого для светлой темы */
-        [data-theme="light"] .logo {
-            fill: rgba(0, 0, 0, 1);
+        .connection-status.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            transition: var(--transition);
+        .connection-status.connected {
+            border-color: rgba(0, 255, 0, 0.5);
+            color: #00ff00;
         }
 
-        .theme-toggle:hover {
-            color: var(--accent-blue);
+        .connection-status.disconnected {
+            border-color: rgba(255, 0, 0, 0.5);
+            color: #ff6666;
         }
 
+        /* Hero Section - Reklame */
         .hero {
-            background: linear-gradient(135deg, var(--hero-bg-start), var(--hero-bg-end));
-            padding: 50px 20px;
-            margin: 20px;
-            border-radius: var(--border-radius);
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            padding: 100px 0;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(42px, 6vw, 72px);
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 80px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #000000;
+            padding: 18px 36px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #f0f0f0, #ffffff);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            padding: 18px 36px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        [data-theme="light"] .hero {
-            border: 1px solid rgba(0, 0, 0, 0.1);
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            display: block;
+            margin-bottom: 10px;
         }
 
-        .hero::before {
+        .stat-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        /* News Section */
+        .news-section {
+            padding: 100px 0;
+            background: #0f0f0f;
+        }
+
+        .news-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            margin-bottom: 60px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 1;
+            height: 4px;
+            background: linear-gradient(90deg, #ffffff, #f0f0f0);
         }
 
-        [data-theme="light"] .hero::before {
-            background: rgba(255, 255, 255, 0.15);
+        .news-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
         }
 
-        .hero h2, .hero p {
-            position: relative;
-            z-index: 2;
-            animation: fadeInText 0.7s ease-out;
+        .news-date {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .hero h2 {
-            font-size: 2rem;
-            margin: 0 0 15px;
+        .news-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .news-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .news-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--muted-text);
-            max-width: 600px;
-            margin: 0 auto;
+        .author-info h4 {
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 5px;
         }
 
-        #search {
-            width: 80%;
-            max-width: 500px;
-            padding: 12px 16px;
-            margin: 25px auto;
-            display: block;
-            border: 2px solid var(--accent-blue);
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            background-color: var(--secondary-bg);
-            color: var(--text-color);
-            transition: var(--transition);
+        .author-info span {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
         }
 
-        #search:focus {
-            outline: none;
-            border-color: var(--accent-purple);
-            background-color: var(--primary-bg);
-            box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
+        /* No News State */
+        .no-news {
+            text-align: center;
+            padding: 80px 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin: 40px 0;
         }
 
-        .news-list {
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .no-news-icon {
+            font-size: 64px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 30px;
         }
 
-        .news-item {
-            background: var(--secondary-bg);
-            padding: 15px;
-            margin: 12px 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: var(--transition);
-            width: 85%;
-            max-width: 700px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .no-news h3 {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
-        .news-item img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-            flex-shrink: 0;
+        .no-news p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            margin-bottom: 30px;
         }
 
-        .news-item:hover {
-            transform: translateY(-5px);
-            background: var(--primary-bg);
-            box-shadow: 0 8px 20px rgba(0, 183, 235, 0.2);
+        .no-news .btn-secondary {
+            font-size: 16px;
+            padding: 12px 24px;
         }
 
-        .news-item h3 {
-            margin: 0;
-            font-size: 1.3rem;
-            font-weight: 500;
-        }
-
-        .news-item p {
-            margin: 5px 0 0;
-            font-size: 0.95rem;
-            color: var(--muted-text);
-        }
-
-        .date {
-            font-size: 1.1rem;
-            color: var(--accent-blue);
-            margin: 15px 0;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, var(--secondary-bg), var(--primary-bg));
-            padding: 25px;
-            border-radius: var(--border-radius);
-            width: 60%;
-            max-width: 800px;
-            max-height: 85vh;
-            overflow-y: auto;
-            color: var(--text-color);
-            text-align: left;
-            box-shadow: var(--shadow);
-            position: relative;
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-            background: var(--secondary-bg);
-            border-radius: 10px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
-            border-radius: 10px;
-            border: 2px solid var(--secondary-bg);
-        }
-
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-purple);
-        }
-
-        .modal-content {
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-blue) var(--secondary-bg);
-        }
-
-        .modal-content img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            margin-top: 50px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .modal-content ul {
-            padding-left: 25px;
-            margin: 15px 0;
-        }
-
-        .modal-content li {
-            margin-bottom: 8px;
-            font-size: 1rem;
-        }
-
-        .modal-content iframe {
-            width: 100%;
-            height: 350px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        .photo-album {
-            display: flex;
-            overflow-x: auto;
-            gap: 12px;
-            margin: 20px 0;
-            padding-bottom: 10px;
-        }
-
-        .photo-album img {
-            width: 160px;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 10px;
-            flex-shrink: 0;
-            transition: var(--transition);
-        }
-
-        .photo-album img:hover {
-            transform: scale(1.08);
-            box-shadow: 0 4px 12px rgba(0, 183, 235, 0.3);
-        }
-
-        .modal.show {
-            display: flex;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .modal.show .modal-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .modal.hide .modal-content {
-            transform: translateY(-20px);
-            opacity: 0;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-
-        @keyframes fadeInText {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .close {
-            background: none;
-            border: none;
-            padding: 10px;
-            margin: 0;
-            font-size: 24px;
-            color: #ff7878;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            cursor: pointer;
-            z-index: 100;
-            line-height: 1;
-        }
-
-        .close:hover {
-            color: #ff5555;
-        }
-
-        .close svg {
-            display: block;
-        }
-
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.4s ease-out;
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .spinner {
-            border: 5px solid var(--muted-text);
-            border-top: 5px solid var(--accent-purple);
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 0.8s linear infinite;
+            border-top-color: #ffffff;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        footer {
-            flex-shrink: 0;
-            background: var(--secondary-bg);
-            padding: 20px 0;
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: var(--muted-text);
+        /* Admin Login Section */
+        .admin-section {
+            background: #000000;
+            border-top: 3px solid #ffffff;
+            padding: 60px 0;
+            text-align: center;
         }
 
-        footer a {
-            color: var(--accent-blue);
-            text-decoration: none;
-            margin: 0 10px;
-            transition: var(--transition);
+        .admin-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 30px;
         }
 
-        footer a:hover {
-            color: var(--accent-purple);
+        .admin-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
         }
 
-        /* Адаптация для экранов до 768px */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 40px 15px;
-                margin: 15px;
-            }
-
-            .hero h2 {
-                font-size: 1.6rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .news-list {
-                margin: 15px;
-            }
-
-            .news-item {
-                width: 90%;
-                flex-direction: column;
-                text-align: center;
-                padding: 20px;
-                gap: 15px;
-            }
-
-            .news-item img {
-                width: 100px;
-                height: 100px;
-                margin-bottom: 10px;
-            }
-
-            .modal-content {
-                width: 90%;
-                padding: 20px;
-                max-height: 90vh;
-            }
-
-            .modal-content h2 {
-                font-size: 1.6rem;
-            }
-
-            .modal-content p {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-
-            .modal-content img {
-                height: 220px;
-                margin-top: 40px;
-            }
-
-            .photo-album img {
-                width: 130px;
-                height: 130px;
-            }
-
-            .modal-content iframe {
-                height: 220px;
-            }
-
-            .close {
-                top: 15px;
-                right: 15px;
-                font-size: 24px;
-                padding: 10px;
-            }
+        .admin-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            font-size: 16px;
         }
 
-        /* Адаптация для экранов до 480px */
-        @media (max-width: 480px) {
-            header {
-                padding: 10px 15px;
-            }
-
-            header h1 {
-                font-size: 1.2rem;
-            }
-
-            header .logo {
-                width: 30px;
-                height: 30px;
-            }
-
-            .hero {
-                padding: 30px 10px;
-                margin: 10px;
-            }
-
-            .hero h2 {
-                font-size: 1.4rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            #search {
-                width: 90%;
-                font-size: 0.95rem;
-            }
-
-            .news-item {
-                width: 95%;
-                padding: 15px;
-            }
-
-            .news-item h3 {
-                font-size: 1.1rem;
-            }
-
-            .news-item img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .modal-content {
-                width: 95%;
-                padding: 15px;
-                max-height: 95vh;
-            }
-
-            .modal-content h2 {
-                font-size: 1.4rem;
-            }
-
-            .modal-content p {
-                font-size: 0.9rem;
-                line-height: 1.5;
-            }
-
-            .modal-content img {
-                height: 180px;
-                margin-top: 45px;
-            }
-
-            .photo-album img {
-                width: 110px;
-                height: 110px;
-            }
-
-            .modal-content iframe {
-                height: 200px;
-            }
-
-            .modal-content ul {
-                padding-left: 15px;
-            }
-
-            .modal-content li {
-                font-size: 0.9rem;
-            }
-
-            .close {
-                top: 10px;
-                right: 10px;
-                font-size: 22px;
-                padding: 10px;
-            }
+        .admin-login-btn {
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #000000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Скрытый label для доступности */
-        .visually-hidden {
+        .admin-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .login-modal-content {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+        }
+
+        .login-close {
             position: absolute;
-            width: 1px;
-            height: 1px;
-            margin: -1px;
-            padding: 0;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
+            right: 20px;
+            top: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s ease;
+        }
+
+        .login-close:hover {
+            color: #ffffff;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .login-submit {
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #000000;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .forgot-password a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #ffffff;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000000;
+            border-top: 3px solid #ffffff;
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 12px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero-container {
+                padding: 0 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .connection-status {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <header>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="logo">
-                    <path d="M21 10h-2V4h1V2H4v2h1v6H3a1 1 0 0 0-1 1v9h20v-9a1 1 0 0 0-1-1zm-7 8v-4h-4v4H7V4h10v14h-3z"></path>
-                    <path d="M9 6h2v2H9zm4 0h2v2h-2zm-4 4h2v2H9zm4 0h2v2h-2z"></path>
-                </svg>
-                <h1>Skolenyheter</h1>
+    <!-- Connection Status -->
+    <div id="connection-status" class="connection-status">
+        <i class="fas fa-circle"></i>
+        <span id="status-text">Kobler til database...</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div>
+                <a href="#" class="logo">SkoleConnect</a>
+                <div class="school-name">Oslo Tekniske Skole</div>
             </div>
-            <button class="theme-toggle" aria-label="Bytt tema" onclick="toggleTheme()">
-                <span id="themeIcon">🌙</span>
+            <ul class="nav-menu">
+                <li><a href="#hjem">Hjem</a></li>
+                <li><a href="#nyheter">Nyheter</a></li>
+                <li><a href="#om">Om Skolen</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section - Reklame -->
+    <section class="hero" id="hjem">
+        <div class="hero-container">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i>
+                Norges mest innovative skoleplattform
+            </div>
+            <h1 class="hero-title">Velkommen til Fremtidens Skole</h1>
+            <p class="hero-subtitle">
+                SkoleConnect revolusjonerer hvordan elever, lærere og foreldre kommuniserer. 
+                Trygg, moderne og bygget spesielt for norske utdanningsinstitusjoner som Oslo Tekniske Skole.
+            </p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Start Din Skole I Dag
+                </a>
+                <a href="#nyheter" class="btn-secondary">
+                    <i class="fas fa-newspaper"></i>
+                    Les Skolenyheter
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Aktive Elever</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">45</span>
+                    <span class="stat-label">Lærere</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Programmer</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Digital Sikkerhet</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section" id="nyheter">
+        <div class="news-container">
+            <h2 class="section-title">Siste Skolenyheter</h2>
+            <p class="section-subtitle">Hold deg oppdatert på det som skjer på Oslo Tekniske Skole</p>
+
+            <div id="news-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Laster nyheter fra database...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Section -->
+    <section class="admin-section">
+        <div class="admin-container">
+            <h3 class="admin-title">Administrator</h3>
+            <p class="admin-subtitle">Administrer skolenyheter og innhold på nettsiden</p>
+            <button class="admin-login-btn" onclick="showLoginModal()">
+                <i class="fas fa-key"></i>
+                Logg inn som administrator
             </button>
-        </header>
-        <div class="hero">
-            <h2>Velkommen til Tresfjord Skole Nyheter!</h2>
-            <p>Følg med på de siste begivenhetene, arrangementene og prestasjonene fra vår skole.</p>
         </div>
-        <main>
-            <label for="search" class="visually-hidden">Søk etter nyheter</label>
-            <input type="text" id="search" placeholder="Søk etter nyheter..." oninput="filterNews()">
-            <section class="news-list"></section>
-        </main>
-        <div id="loadingScreen" class="loading-screen">
-            <div class="spinner"></div>
-        </div>
-        <div id="newsModal" class="modal">
-            <div class="modal-content">
-                <button class="close" aria-label="Lukk modalvindu" onclick="closeModal()">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="#ff7878">
-                        <path d="M18 6L6 18M6 6l12 12" stroke="#ff7878" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-modal-content">
+            <span class="login-close" onclick="hideLoginModal()">&times;</span>
+            <h2 class="login-title">Administrator Login</h2>
+            <p class="login-subtitle">Logg inn for å administrere skolenyheter</p>
+
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Brukernavn</label>
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        placeholder="Skriv inn brukernavn"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Passord</label>
+                    <input 
+                        type="password" 
+                        class="form-input" 
+                        placeholder="Skriv inn passord"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="login-submit">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Logg inn
                 </button>
-                <img id="modalImage" src="" alt="Nyhet">
-                <h2 id="modalTitle"></h2>
-                <div id="modalText"></div>
-                <div id="modalPhotoAlbum" class="photo-album"></div>
-                <div id="modalVideo"></div>
-                <p><strong>Forfatter:</strong> <span id="modalAuthor"></span></p>
-                <p><strong>Redaktør:</strong> <span id="modalEditor"></span></p>
-                <p><strong>Dato:</strong> <span id="modalDate"></span></p>
+            </form>
+
+            <div class="forgot-password">
+                <a href="#">Glemt passord?</a>
             </div>
         </div>
     </div>
-    <footer>
-        <p>© 2025 Tresfjord Skole. Alle rettigheter reservert.</p>
-        <p>
-            <a href="mailto:info@tresfjordskole.no">Kontakt oss</a> |
-            <a href="https://facebook.com/tresfjordskole">Facebook</a> |
-            <a href="https://instagram.com/tresfjordskole">Instagram</a>
-        </p>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Oslo Tekniske Skole</h3>
+                <p>En ledende teknisk utdanningsinstitusjon i hjertet av Oslo.</p>
+                <p><strong>Adresse:</strong> Teknisk vei 1, 0123 Oslo</p>
+                <p><strong>Telefon:</strong> +47 22 12 34 56</p>
+                <p><strong>E-post:</strong> post@oslotekniskeskole.no</p>
+            </div>
+            <div class="footer-section">
+                <h3>Utdanning</h3>
+                <a href="#">IT og Programmering</a>
+                <a href="#">Elektro og Automatisering</a>
+                <a href="#">Design og Media</a>
+                <a href="#">Bygg og Anlegg</a>
+            </div>
+            <div class="footer-section">
+                <h3>For Elever</h3>
+                <a href="#">Timeplan</a>
+                <a href="#">Karakterer</a>
+                <a href="#">Bibliotek</a>
+                <a href="#">Studentkort</a>
+            </div>
+            <div class="footer-section">
+                <h3>Kontakt</h3>
+                <a href="#">Kontakt oss</a>
+                <a href="#">Ledelse</a>
+                <a href="#">Jobb hos oss</a>
+                <a href="#">Presse</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Oslo Tekniske Skole. Alle rettigheter reservert. | Drevet av SkoleConnect</p>
+        </div>
     </footer>
 
     <script>
-        // Переключение темы
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.dataset.theme === 'light' ? 'dark' : 'light';
-            body.dataset.theme = currentTheme;
-            document.getElementById('themeIcon').textContent = currentTheme === 'light' ? '🌙' : '☀️';
-            localStorage.setItem('theme', currentTheme);
-        }
+        // Firebase Connection Status
+        let connectionStatus = false;
 
-        // Загрузка сохраненной темы
-        window.addEventListener('load', () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.body.dataset.theme = savedTheme;
-                document.getElementById('themeIcon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
-            }
+        // Initialize when loaded
+        window.addEventListener('load', function() {
+            console.log('🚀 Siden er lastet, starter Firebase...');
+            setTimeout(() => {
+                initializeFirebase();
+                loadNews();
+            }, 1000);
         });
 
-        function sanitizeHTML(str) {
+        function initializeFirebase() {
+            try {
+                if (window.firebaseDatabase) {
+                    const connectedRef = window.firebaseRef(window.firebaseDatabase, '.info/connected');
+                    window.firebaseOnValue(connectedRef, (snapshot) => {
+                        connectionStatus = snapshot.val() === true;
+                        updateConnectionStatus();
+
+                        if (connectionStatus) {
+                            console.log('✅ Firebase tilkoblet!');
+                        } else {
+                            console.log('❌ Firebase ikke tilkoblet');
+                        }
+                    });
+                } else {
+                    console.log('❌ Firebase ikke konfigurert');
+                    updateConnectionStatus();
+                }
+            } catch (error) {
+                console.error('❌ Firebase feil:', error);
+                updateConnectionStatus();
+            }
+        }
+
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connection-status');
+            const statusText = document.getElementById('status-text');
+
+            if (connectionStatus) {
+                statusElement.className = 'connection-status show connected';
+                statusText.innerHTML = '<i class="fas fa-check-circle"></i> Tilkoblet database';
+            } else {
+                statusElement.className = 'connection-status show disconnected';
+                statusText.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Database ikke tilkoblet';
+            }
+
+            // Hide after 3 seconds if connected
+            if (connectionStatus) {
+                setTimeout(() => {
+                    statusElement.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // ИСПРАВЛЕННАЯ функция loadNews с подробным логированием
+        function loadNews() {
+            console.log('📰 Загружаем новости с Firebase...');
+
+            try {
+                // Проверяем что Firebase инициализирован
+                if (!window.firebaseDatabase) {
+                    console.error('❌ Firebase database не доступен');
+                    showNoNews('Firebase не подключен. Проверьте конфигурацию.');
+                    return;
+                }
+
+                const newsRef = window.firebaseRef(window.firebaseDatabase, 'news');
+
+                // Подписываемся на изменения в реальном времени
+                window.firebaseOnValue(newsRef, (snapshot) => {
+                    console.log('📊 Firebase snapshot получен:', snapshot.exists());
+
+                    const data = snapshot.val();
+                    console.log('📋 Данные из Firebase:', data ? Object.keys(data).length + ' новостей' : 'null');
+
+                    if (data) {
+                        displayNews(data);
+                    } else {
+                        console.log('📰 Нет новостей в базе данных');
+                        showNoNews('Нет новостей в базе данных.');
+                    }
+                }, (error) => {
+                    console.error('❌ Ошибка загрузки новостей:', error);
+                    showNoNews('Ошибка загрузки новостей: ' + error.message);
+                });
+
+            } catch (error) {
+                console.error('❌ Критическая ошибка Firebase:', error);
+                showNoNews('Критическая ошибка Firebase. Проверьте консоль.');
+            }
+        }
+
+        // ИСПРАВЛЕННАЯ функция displayNews
+        function displayNews(newsData) {
+            console.log('🎨 Отображаем новости:', newsData);
+            const container = document.getElementById('news-container');
+
+            if (!newsData) {
+                console.log('❌ newsData пустой');
+                showNoNews('Нет данных для отображения.');
+                return;
+            }
+
+            // Преобразуем объект в массив
+            const newsArray = Object.entries(newsData)
+                .map(([id, news]) => {
+                    console.log('📄 Обрабатываем новость:', id, news.title);
+                    return {id, ...news};
+                })
+                .filter(news => news.title && news.content && news.author) // Фильтруем поврежденные записи
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                .slice(0, 6); // Показываем последние 6 новостей
+
+            console.log('📊 Отфильтрованные новости:', newsArray.length);
+
+            if (newsArray.length === 0) {
+                console.log('❌ Нет валидных новостей после фильтрации');
+                showNoNews('Нет валидных новостей для отображения.');
+                return;
+            }
+
+            // Создаем HTML для новостей
+            const newsHTML = `
+                <div class="news-grid">
+                    ${newsArray.map(news => {
+                        console.log('🏗️ Создаем HTML для:', news.title);
+                        return `
+                            <article class="news-card fade-in">
+                                <div class="news-date">
+                                    <i class="far fa-calendar"></i>
+                                    ${formatDate(news.timestamp)}
+                                </div>
+                                <h3 class="news-title">${escapeHtml(news.title)}</h3>
+                                <p class="news-excerpt">${escapeHtml(news.content.substring(0, 150))}${news.content.length > 150 ? '...' : ''}</p>
+                                <div class="news-author">
+                                    <div class="author-avatar">
+                                        ${getInitials(news.author)}
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>${escapeHtml(news.author)}</h4>
+                                        <span>${escapeHtml(news.category || 'Ukjent')}</span>
+                                    </div>
+                                </div>
+                            </article>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+
+            console.log('✅ HTML создан, вставляем в контейнер');
+            container.innerHTML = newsHTML;
+
+            console.log('🎉 Новости успешно отображены!');
+        }
+
+        // Вспомогательные функции
+        function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
-            div.textContent = str;
+            div.textContent = text;
             return div.innerHTML;
         }
 
-        function formatText(text) {
-            const lines = text.split('\n');
-            let result = '';
-            let inList = false;
-
-            lines.forEach(line => {
-                line = line.trim();
-                if (line.startsWith('—')) {
-                    if (!inList) {
-                        result += '<ul>';
-                        inList = true;
-                    }
-                    result += `<li>${sanitizeHTML(line.substring(1).trim())}</li>`;
-                } else {
-                    if (inList) {
-                        result += '</ul>';
-                        inList = false;
-                    }
-                    if (line) {
-                        result += `<p>${sanitizeHTML(line)}</p>`;
-                    }
-                }
-            });
-
-            if (inList) {
-                result += '</ul>';
-            }
-
-            return result;
+        function getInitials(name) {
+            if (!name) return '??';
+            return name.split(' ').map(n => n[0]).join('').toUpperCase();
         }
 
-        function getYouTubeEmbedUrl(url) {
-            const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-            if (!videoIdMatch) {
-                console.warn('Invalid YouTube URL:', url);
-                return '';
-            }
-            return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
-        }
+        function formatDate(timestamp) {
+            if (!timestamp) return 'Ukjent dato';
 
-        function openModal(image, title, text, author, editor, date, videoUrl, photos) {
-            const modal = document.getElementById('newsModal');
-            document.getElementById('modalImage').src = image;
-            document.getElementById('modalTitle').innerText = sanitizeHTML(title);
-            document.getElementById('modalText').innerHTML = formatText(text);
-            document.getElementById('modalAuthor').innerText = sanitizeHTML(author);
-            document.getElementById('modalEditor').innerText = sanitizeHTML(editor);
-            document.getElementById('modalDate').innerText = sanitizeHTML(date);
+            try {
+                const date = new Date(timestamp);
+                if (isNaN(date.getTime())) return 'Ugyldig dato';
 
-            const photoAlbum = document.getElementById('modalPhotoAlbum');
-            photoAlbum.innerHTML = '';
-            if (photos && Array.isArray(photos) && photos.length > 0) {
-                const limitedPhotos = photos.slice(0, 15);
-                limitedPhotos.forEach(photoUrl => {
-                    const img = document.createElement('img');
-                    img.src = photoUrl;
-                    img.alt = 'Foto fra album';
-                    img.loading = 'lazy';
-                    photoAlbum.appendChild(img);
+                return date.toLocaleDateString('no-NO', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric'
                 });
+            } catch (error) {
+                console.error('Feil ved formatering av dato:', error);
+                return 'Dato feil';
             }
+        }
 
-            const videoContainer = document.getElementById('modalVideo');
-            if (videoUrl) {
-                const embedUrl = getYouTubeEmbedUrl(videoUrl);
-                if (embedUrl) {
-                    videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`;
-                } else {
-                    videoContainer.innerHTML = '';
-                }
-            } else {
-                videoContainer.innerHTML = '';
+        function showNoNews(message) {
+            const container = document.getElementById('news-container');
+            container.innerHTML = `
+                <div class="no-news">
+                    <div class="no-news-icon">
+                        <i class="far fa-newspaper"></i>
+                    </div>
+                    <h3>Ingen nyheter enda</h3>
+                    <p>${message}</p>
+                    <a href="#" class="btn-secondary" onclick="showLoginModal()">
+                        <i class="fas fa-plus"></i>
+                        Legg til første nyhet
+                    </a>
+                </div>
+            `;
+        }
+
+        // Login Modal Functions
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function hideLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            alert('🔑 Login funksjon kommer snart! For nå, gå direkte til admin_fixed.html');
+            hideLoginModal();
+            window.location.href = 'admin_fixed.html';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target === modal) {
+                hideLoginModal();
             }
-
-            modal.classList.add('show');
-            modal.classList.remove('hide');
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('newsModal');
-            modal.classList.add('hide');
-            setTimeout(() => {
-                modal.classList.remove('show', 'hide');
-                document.getElementById('modalVideo').innerHTML = '';
-                document.getElementById('modalPhotoAlbum').innerHTML = '';
-            }, 300);
-        }
-
-        function addNews(image, title, shortText, fullText, author, editor, date, videoUrl, photos) {
-            const newsList = document.querySelector('.news-list');
-            let lastDate = newsList.lastElementChild?.getAttribute('data-date');
-            if (lastDate !== date) {
-                const dateElement = document.createElement('p');
-                dateElement.className = 'date';
-                dateElement.textContent = date;
-                dateElement.setAttribute('data-date', date);
-                newsList.appendChild(dateElement);
-            }
-            const article = document.createElement('article');
-            article.className = 'news-item';
-            article.addEventListener('click', () => {
-                openModal(image, title, fullText, author, editor, date, videoUrl, photos);
-            });
-
-            const img = document.createElement('img');
-            img.src = image;
-            img.alt = title;
-            img.loading = 'lazy';
-
-            const textDiv = document.createElement('div');
-            const h3 = document.createElement('h3');
-            h3.textContent = title;
-            const p = document.createElement('p');
-            p.textContent = shortText;
-
-            textDiv.appendChild(h3);
-            textDiv.appendChild(p);
-            article.appendChild(img);
-            article.appendChild(textDiv);
-
-            newsList.appendChild(article);
-        }
-
-        function filterNews() {
-            const query = document.getElementById('search').value.toLowerCase();
-            document.querySelectorAll('.news-item').forEach(item => {
-                const title = item.querySelector('h3').textContent.toLowerCase();
-                const text = item.querySelector('p').textContent.toLowerCase();
-                item.style.display = (title.includes(query) || text.includes(query)) ? 'flex' : 'none';
-            });
-        }
-
-        window.addEventListener('load', () => {
-            const loadingScreen = document.getElementById('loadingScreen');
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-            }, 50);
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 400);
         });
 
-        addNews(
-            'news01.jpg',
-            '🎉 Vinterball 2025 ❄️',
-            'Les videre',
-            'Dette vinterballet arrangeres hvert år på Tresfjord skole og samler barn fra hele kommunen. Det er en spesiell begivenhet som forener elever, skaper feststemning og gir følelsen av et ekte vintereventyr.\n👫 I salen hersker det en magisk atmosfære fylt med glede og fellesskap. Elevene kler seg i vakre kjoler og pene antrekk, deltar i dans og nyter kveldens festprogram.\n🎶 Kveldens program:\n— Høytidelig åpning av ballet\n— Danseopptredener\n— DJ og dans utover kvelden\n— Kåring av Ballkongen og Ballprinsessen\n— Musikk, glede og uforglemmelige minner\n✨ Vinterballet på Tresfjord skole er ikke bare en fest, men en glitrende opplevelse som alle ser frem til hele året!',
-            'Dima Toshev',
-            'Dima Toshev',
-            '08.02.2025',
-            'https://youtu.be/zaalCxbux34',
-            ['news01.jpg', 'news01.jpg', 'news01.jpg']
-        );
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // DEBUG функция для проверки новостей
+        window.debugNews = function() {
+            console.clear();
+            console.log('🔍 DEBUG: Проверяем новости вручную...');
+
+            if (!window.firebaseDatabase) {
+                console.error('❌ Firebase не инициализирован');
+                return;
+            }
+
+            const newsRef = window.firebaseRef(window.firebaseDatabase, 'news');
+            window.firebaseOnValue(newsRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log('📊 Сырые данные из Firebase:', data);
+
+                if (data) {
+                    console.log('📄 Список новостей:');
+                    Object.entries(data).forEach(([id, news]) => {
+                        console.log(`  - ${id}:`, {
+                            title: news.title,
+                            author: news.author,
+                            category: news.category,
+                            timestamp: news.timestamp
+                        });
+                    });
+                } else {
+                    console.log('❌ Данных нет');
+                }
+            }, { once: true });
+        };
+
+        // Reloade news function for testing
+        window.reloadNews = function() {
+            console.log('🔄 Принудительная перезагрузка новостей...');
+            loadNews();
+        };
+
+        console.log('🏫 SkoleConnect главная страница загружена!');
+        console.log('🎯 Команды для отладки:');
+        console.log('   - debugNews() - показать сырые данные из Firebase');
+        console.log('   - reloadNews() - принудительно перезагрузить новости');
     </script>
 </body>
 </html>
